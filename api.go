@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -139,6 +140,10 @@ func newServer(port string, count int, db *gorm.DB) *server {
 
 func main() {
 
+	var port string
+	flag.StringVar(&port, "port", "4000", "./api -port 4000")
+	flag.Parse()
+
 	log.Println("Connecting to sqlite DB")
 	db, err := gorm.Open("sqlite3", "products.db")
 	if err != nil {
@@ -146,7 +151,7 @@ func main() {
 	}
 	defer db.Close()
 
-	server := newServer("3333", 3, db)
+	server := newServer(port, 3, db)
 	done, err := server.listenAndServe()
 	if err != nil {
 		log.Println(err)

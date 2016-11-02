@@ -1,3 +1,17 @@
+A demo project using dvajs and create-react-app. 
+
+## Running the api
+
+$ ./api_darwin_x86_amd64 -port 4000 (default port is 4000)
+
+Please change the proxy var in package.json accordingly.
+
+```
+"proxy": "http://localhost:4000"
+```
+
+
+===================
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.  
