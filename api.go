@@ -12,6 +12,7 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -34,7 +35,7 @@ func (s *server) listenAndServe() (chan struct{}, error) {
 	}
 	s.listener = listener
 	go s.httpServer.Serve(s.listener)
-	log.Printf("Server now listening at localhost%v", s.httpServer.Addr)
+	log.Printf("Server now listening at %v", s.httpServer.Addr)
 
 	go func() {
 		<-sigs
@@ -133,8 +134,15 @@ func newServer(port string, count int, db *gorm.DB) *server {
 	router := httprouter.New()
 	router.GET("/api/products", queryHandler)
 	router.GET("/api/products/vote/:id", voteHandler)
+	// Serve static files from the ./build directory
+	router.NotFound = http.FileServer(http.Dir("build"))
 
-	httpServer := &http.Server{Addr: ":" + port, Handler: router}
+	httpServer := &http.Server{
+		Addr:         "127.0.0.1:" + port,
+		Handler:      router,
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
 	return &server{httpServer: httpServer}
 }
 
