@@ -37,7 +37,7 @@ The server has a catch-all route "/*" needed for single page apps.
 
 Goto : http://localhost:4000 
 
-The difference between the dev server provided by `npm start` and api server is that it does not hot-reload.`
+The difference between the dev server provided by `npm start` and api server is that it does not hot-reload.
 
 ## Building api.go
 
@@ -48,10 +48,10 @@ To build:
 ```
 $ cd /path/to/popular-products
 $ go get 
-$ GOOS=linux GOARCH=amd64 go build -o api_linux_x86_amd64
+$ GOOS=linux GOARCH=amd64 go build -o api_linux_x86_amd64 //for a linux binary
 or
 $ go build .
-
+```
 
 ===================
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
